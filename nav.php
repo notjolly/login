@@ -13,7 +13,7 @@ if (str_ends_with($_SERVER["PHP_SELF"],"direct-message.php")){
 }
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary navbar-static-top" >
   <div class="container-fluid">
     <a class="navbar-brand" href="#">FaceBuk</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">

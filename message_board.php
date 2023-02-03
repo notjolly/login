@@ -40,7 +40,7 @@
             ?>
             <?php if ($_SESSION["user"] == $row["user_id"]):?>
             <center>
-              <div class= "toast show" role="alert" aria-live="assertive" aria-atomic="true" style="background-color:#B6D0E2; margin-left:10%;width: 400px;border-color:black">
+              <div class= "toast show" role="alert" aria-live="assertive" aria-atomic="true" style="max-width:100%;height:auto;background-color:#B6D0E2; margin-left:10%;width: 90%;border-color:black">
                 <div class="toast-header" style="background-color:#B6D0E2">
                   <img src="uploads/<?php echo $userrow["profilePic"]?>" class="img-fluid rounded mx-1 my-1" alt="" style="width:40px;height:40px">
                   <strong class="me-auto">  <?php echo $userrow["username"]?></strong>
@@ -68,7 +68,7 @@
 
           <?php else:?>
           <center>
-            <div class= "toast show" role="alert" aria-live="assertive" aria-atomic="true" style="margin-right:10%;width: 400px;border-color:black">
+            <div class= "toast show" role="alert" aria-live="assertive" aria-atomic="true" style="max-width:100%;height:auto;margin-right:10%;width: 90%;border-color:black">
               <div class="toast-header">
               <img src="uploads/<?php echo $userrow["profilePic"]?>" class="img-fluid rounded mx-1 my-1" alt="" style="width:40px;height:40px">
                 <strong class="me-auto">  <?php echo $userrow["username"]?></strong>
@@ -99,11 +99,16 @@
       </div>
     </div>
 </div>
+
 <div class="fixed-bottom d-flex justify-content-center" style="position: fixed;">
-    <form action="message_action.php" method="post">
-        <input type="text" class= "my-2" name="message"required> 
-        <button type="submit" class="mx-2 my-2 btn btn-primary">Send</button>
-    </form>
+  <div class="container">
+    <center>
+      <form action="message_action.php" method="post">
+          <textarea id="message_input" name="message" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' style="resize: none;overflow: hidden;vertical-align: middle;width:70%; max-width:600px;" maxlength="2048" required></textarea> 
+          <button type="submit" class="mr-2 my-2 btn btn-primary" style="vertical-align: middle;">Send</button>
+        </form>
+    </center>
+  </div>
 </div>
 
 <?php
@@ -120,6 +125,7 @@ $count = $countsqlquery->fetch_assoc();
       var lastMessageId = <?php echo $idresult ?>;
       var lastMessageContent = "<?php echo $messagecontent ?>";
       var rowCount = <?php echo $count['COUNT(*)'] ?>;
+      var check = rowCount+""+lastMessageId+""+lastMessageContent;
       setInterval(function () {    
         $.ajax({
           type: "POST",
@@ -127,8 +133,7 @@ $count = $countsqlquery->fetch_assoc();
           dataType: "json",
           success: function (response){
             var data = response;
-            console.log(data);
-            if (rowCount+lastMessageId+lastMessageContent != data) { 
+            if (check != data) { 
               $("#messages").load("message_board.php #messages");
             }        
           }
